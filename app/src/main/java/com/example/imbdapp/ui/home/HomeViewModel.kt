@@ -1,13 +1,28 @@
 package com.example.imbdapp.ui.home
 
-import androidx.lifecycle.LiveData
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.imbdapp.Data.MovieRepository
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(val app: Application) : AndroidViewModel(app){
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private val dataRepo = MovieRepository(app)
+    val moviesData = dataRepo.moviesData
+
+    private val _page = MutableLiveData<Int>().apply {
+        value = 1
     }
-    val text: LiveData<String> = _text
+
+    var page: MutableLiveData<Int> = _page
+
+    fun refreshMoviesData() {
+        page.postValue(1)
+        dataRepo.getPage(page.value!!)
+    }
+
+    fun nextPage() {
+        page.postValue(page.value!! + 1)
+        dataRepo.getPage(page.value!!)
+    }
 }
