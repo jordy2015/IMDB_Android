@@ -3,26 +3,21 @@ package com.example.imbdapp.ui.home
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.imbdapp.Data.MovieRepository
+import com.example.imbdapp.Repository.MovieRepository
 
 class HomeViewModel(val app: Application) : AndroidViewModel(app){
 
     private val dataRepo = MovieRepository(app)
+    private var page: Int = 1
     val moviesData = dataRepo.moviesData
 
-    private val _page = MutableLiveData<Int>().apply {
-        value = 1
-    }
-
-    var page: MutableLiveData<Int> = _page
-
     fun refreshMoviesData() {
-        page.postValue(1)
-        dataRepo.getPage(page.value!!)
+        page = 1
+        dataRepo.getPage(page)
     }
 
     fun nextPage() {
-        page.postValue(page.value!! + 1)
-        dataRepo.getPage(page.value!!)
+        page++
+        dataRepo.getPage(page)
     }
 }

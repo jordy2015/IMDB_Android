@@ -1,7 +1,7 @@
-package com.example.imbdapp.Data
+package com.example.imbdapp.Services
+import com.example.imbdapp.Data.Movies
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface MovieService {

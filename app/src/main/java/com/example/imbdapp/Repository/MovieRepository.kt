@@ -1,10 +1,12 @@
-package com.example.imbdapp.Data
+package com.example.imbdapp.Repository
 
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
+import com.example.imbdapp.Data.Movie
+import com.example.imbdapp.Services.MovieService
 import com.example.imbdapp.Utilities.Performe
 import com.example.imbdapp.Utilities.API_KEY_STRING
 import com.example.imbdapp.Utilities.ParamsEmun
@@ -34,7 +36,8 @@ class MovieRepository(val app: Application) {
             params[ParamsEmun.KEY.string] = API_KEY_STRING
             params[ParamsEmun.YEAR.string] = Calendar.getInstance().get(Calendar.YEAR).toString()
             params[ParamsEmun.PAGE.string] = "$page"
-            val movies = Performe.request<MovieService>(MovieService::class.java)?.getMoviesData(params)?.body()
+            val movies = Performe.request<MovieService>(
+                MovieService::class.java)?.getMoviesData(params)?.body()
             movies?.let {
                 lastPage.postValue(movies.lastPage)
                 if(page > 1){

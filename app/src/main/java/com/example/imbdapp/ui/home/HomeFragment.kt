@@ -75,7 +75,10 @@ class HomeFragment : Fragment() {
         })
 
         swipeLayout.setOnRefreshListener {
-            homeViewModel.refreshMoviesData()
+            if (!isLoading){
+                isLoading = true
+                homeViewModel.refreshMoviesData()
+            }
         }
 
         return root
