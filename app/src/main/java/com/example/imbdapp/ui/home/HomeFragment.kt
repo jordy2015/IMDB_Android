@@ -4,28 +4,88 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.imbdapp.R
+import com.example.imbdapp.Extensions.startAnimation
+import com.example.imbdapp.Extensions.stopAnimation
+import com.example.imbdapp.Utilities.PaginationScrollListener
+import com.example.imbdapp.ViewModelUtilities.DaggerModelComponent
+import com.example.imbdapp.ViewModelUtilities.ViewModelFactory
+import javax.inject.Inject
 
 class HomeFragment : Fragment() {
+    @Inject
+    lateinit var vmFactory: ViewModelFactory
+    lateinit var homeViewModel: HomeViewModel
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var swipeLayout: SwipeRefreshLayout
+    private lateinit var adapter: HomeRecyclerAdapter
+    private lateinit var layoutManager: RecyclerView.LayoutManager
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(this, Observer {
-            textView.text = it
+        recyclerView = root.findViewById(R.id.moviesRecyclerView)
+        swipeLayout = root.findViewById(R.id.moviewSwipeRefreshLayout)
+        progressBar = root.findViewById(R.id.homeProgressBar)
+        progressBar.startAnimation()
+
+        layoutManager = GridLayoutManager(context,2)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setHasFixedSize(true)
+        var isLoading: Boolean = false
+
+        adapter = HomeRecyclerAdapter(requireContext())
+        DaggerModelComponent.create().inject(this)
+        homeViewModel = ViewModelProviders.of(this, vmFactory).get(HomeViewModel::class.java)
+        homeViewModel.moviesData.observe(this, Observer {
+            if (adapter.movies.isEmpty()) {
+                adapter.newMovies(it)
+                recyclerView.adapter = adapter
+            } else {
+                adapter.newMovies(it)
+                adapter.notifyDataSetChanged()
+            }
+
+            progressBar.stopAnimation()
+            swipeLayout.isRefreshing = false
+            isLoading = false
         })
+
+        recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager as GridLayoutManager) {
+            override fun isLastPage(): Boolean {
+                return false
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+
+            override fun loadMoreItems() {
+                isLoading = true
+                progressBar.startAnimation()
+                homeViewModel.nextPage()
+            }
+        })
+
+        swipeLayout.setOnRefreshListener {
+            if (!isLoading){
+                isLoading = true
+                homeViewModel.refreshMoviesData()
+            }
+        }
+
         return root
     }
 }
