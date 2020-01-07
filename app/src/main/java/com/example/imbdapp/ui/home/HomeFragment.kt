@@ -15,10 +15,15 @@ import com.example.imbdapp.R
 import com.example.imbdapp.Extensions.startAnimation
 import com.example.imbdapp.Extensions.stopAnimation
 import com.example.imbdapp.Utilities.PaginationScrollListener
+import com.example.imbdapp.ViewModelUtilities.DaggerModelComponent
+import com.example.imbdapp.ViewModelUtilities.ViewModelFactory
+import javax.inject.Inject
 
 class HomeFragment : Fragment() {
+    @Inject
+    lateinit var vmFactory: ViewModelFactory
+    lateinit var homeViewModel: HomeViewModel
 
-    private lateinit var homeViewModel: HomeViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeLayout: SwipeRefreshLayout
     private lateinit var adapter: HomeRecyclerAdapter
@@ -39,11 +44,11 @@ class HomeFragment : Fragment() {
         layoutManager = GridLayoutManager(context,2)
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
-        var isLastPage: Boolean = false
         var isLoading: Boolean = false
 
         adapter = HomeRecyclerAdapter(requireContext())
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        DaggerModelComponent.create().inject(this)
+        homeViewModel = ViewModelProviders.of(this, vmFactory).get(HomeViewModel::class.java)
         homeViewModel.moviesData.observe(this, Observer {
             if (adapter.movies.isEmpty()) {
                 adapter.newMovies(it)
@@ -60,7 +65,7 @@ class HomeFragment : Fragment() {
 
         recyclerView.addOnScrollListener(object : PaginationScrollListener(layoutManager as GridLayoutManager) {
             override fun isLastPage(): Boolean {
-                return isLastPage
+                return false
             }
 
             override fun isLoading(): Boolean {

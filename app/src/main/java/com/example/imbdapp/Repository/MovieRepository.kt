@@ -14,10 +14,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.HashMap
 
 
-class MovieRepository(val app: Application) {
+class MovieRepository @Inject constructor() {
 
     val moviesData = MutableLiveData<List<Movie>>()
     val lastPage = MutableLiveData<Int>()
@@ -31,7 +32,7 @@ class MovieRepository(val app: Application) {
         if (page > lastPage.value?.toInt() ?: 1) {
             return
         }
-        if (netWorkingAvailable()) {
+        //if (netWorkingAvailable()) {
             val params = HashMap<String, String> ()
             params[ParamsEmun.KEY.string] = API_KEY_STRING
             params[ParamsEmun.YEAR.string] = Calendar.getInstance().get(Calendar.YEAR).toString()
@@ -49,15 +50,16 @@ class MovieRepository(val app: Application) {
                     moviesData.postValue(movies.results)
                 }
             }
-        }
+        //}
     }
 
+    /* Network status
     @Suppress("DEPRECATION")
     fun netWorkingAvailable(): Boolean {
         val connectivityManager = app.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
         return networkInfo?.isConnectedOrConnecting ?: false
-    }
+    }*/
 
     fun getPage(page: Int) {
         CoroutineScope(Dispatchers.IO).launch {
