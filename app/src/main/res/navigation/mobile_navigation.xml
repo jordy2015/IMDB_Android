@@ -9,7 +9,11 @@
         android:id="@+id/nav_home"
         android:name="com.example.imbdapp.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_detailMovie"
+            app:destination="@id/detailMovie" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
@@ -40,4 +44,9 @@
         android:name="com.example.imbdapp.ui.send.SendFragment"
         android:label="@string/menu_send"
         tools:layout="@layout/fragment_send" />
+    <fragment
+        android:id="@+id/detailMovie"
+        android:name="com.example.imbdapp.ui.detail.DetailMovie"
+        android:label="fragment_detail_movie"
+        tools:layout="@layout/fragment_detail_movie" />
 </navigation>
