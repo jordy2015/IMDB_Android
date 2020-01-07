@@ -65,4 +65,15 @@
         app:layout_constraintEnd_toEndOf="@+id/posterImageView"
         app:layout_constraintTop_toTopOf="@+id/posterImageView" />
 
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_fav_toggle"
+        android:textOff=""
+        android:textOn=""
+        app:layout_constraintStart_toStartOf="@+id/posterImageView"
+        app:layout_constraintTop_toTopOf="@+id/posterImageView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

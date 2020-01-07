@@ -8,9 +8,12 @@ import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.imbdapp.Data.Movie
 import com.example.imbdapp.R
 import com.example.imbdapp.Extensions.startAnimation
 import com.example.imbdapp.Extensions.stopAnimation
@@ -19,7 +22,7 @@ import com.example.imbdapp.ViewModelUtilities.DaggerModelComponent
 import com.example.imbdapp.ViewModelUtilities.ViewModelFactory
 import javax.inject.Inject
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
     @Inject
     lateinit var vmFactory: ViewModelFactory
     lateinit var homeViewModel: HomeViewModel
@@ -29,6 +32,7 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: HomeRecyclerAdapter
     private lateinit var layoutManager: RecyclerView.LayoutManager
     private lateinit var progressBar: ProgressBar
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +43,7 @@ class HomeFragment : Fragment() {
         recyclerView = root.findViewById(R.id.moviesRecyclerView)
         swipeLayout = root.findViewById(R.id.moviewSwipeRefreshLayout)
         progressBar = root.findViewById(R.id.homeProgressBar)
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
         progressBar.startAnimation()
 
         layoutManager = GridLayoutManager(context,2)
@@ -46,9 +51,9 @@ class HomeFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         var isLoading: Boolean = false
 
-        adapter = HomeRecyclerAdapter(requireContext())
+        adapter = HomeRecyclerAdapter(requireContext(), this)
         DaggerModelComponent.create().inject(this)
-        homeViewModel = ViewModelProviders.of(this, vmFactory).get(HomeViewModel::class.java)
+        homeViewModel = ViewModelProviders.of(requireActivity(), vmFactory).get(HomeViewModel::class.java)
         homeViewModel.moviesData.observe(this, Observer {
             if (adapter.movies.isEmpty()) {
                 adapter.newMovies(it)
@@ -87,5 +92,10 @@ class HomeFragment : Fragment() {
         }
 
         return root
+    }
+
+    override fun onItemClicked(video: Movie) {
+        homeViewModel.selectedMovie.value = video
+        navController.navigate(R.id.action_nav_home_to_detailMovie)
     }
 }

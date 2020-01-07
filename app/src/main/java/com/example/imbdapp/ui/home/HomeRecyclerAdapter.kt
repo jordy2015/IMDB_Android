@@ -9,9 +9,10 @@ import com.example.imbdapp.R
 import com.example.imbdapp.Data.Movie
 import com.example.imbdapp.Extensions.getPosterUrl
 import com.example.imbdapp.Extensions.getRating
+import com.example.imbdapp.Extensions.loadImage
 
 
-class HomeRecyclerAdapter(val context: Context): RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>()
+class HomeRecyclerAdapter(val context: Context, val itemListener: MovieItemListener): RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>()
 {
     val movies: MutableList<Movie> = mutableListOf()
 
@@ -44,11 +45,11 @@ class HomeRecyclerAdapter(val context: Context): RecyclerView.Adapter<HomeRecycl
             rating.let {
                 it.rating = movie.getRating()
             }
-            poster.let {
+            poster.let { imageView ->
                 movie.posterPath?.let {
-                    Glide.with(context).load(movie.getPosterUrl()).into(poster)
+                    imageView.loadImage(movie.getPosterUrl())
                 }?: run {
-                    poster.setImageResource(R.drawable.ic_placeholdermovie)
+                    imageView.setImageResource(R.drawable.ic_placeholdermovie)
                 }
             }
 
@@ -61,6 +62,13 @@ class HomeRecyclerAdapter(val context: Context): RecyclerView.Adapter<HomeRecycl
                 }
                 popup.show()
             }
+            itemView.setOnClickListener {
+                itemListener.onItemClicked(movie)
+            }
         }
+    }
+
+    interface MovieItemListener {
+        fun onItemClicked(video: Movie)
     }
 }
