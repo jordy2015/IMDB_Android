@@ -1,5 +1,6 @@
 package com.example.imbdapp.Data
 
+import com.example.imbdapp.Utilities.IMAGES_URL
 import com.squareup.moshi.Json
 
 data class Movie (
@@ -9,4 +10,6 @@ data class Movie (
     val title: String,
     val id: Int,
     val overview: String
-)
+){
+    val posterURL get() = "$IMAGES_URL$posterPath"
+}

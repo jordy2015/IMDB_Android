@@ -38,11 +38,9 @@ class DetailMovie : Fragment() {
             (activity as AppCompatActivity?)?.supportActionBar?.let {nav ->
                 nav.setTitle(movie.title)
                 binding.detailRatingBar.rating = movie.getRating()
-                binding.posterImage.loadImage(movie.getPosterUrl())
             }
         })
-
-
+        
         return binding.root
     }
 
