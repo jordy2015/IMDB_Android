@@ -5,21 +5,40 @@ import android.view.*
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imbdapp.R
+import com.example.imbdapp.data.MovieDataBase
 import com.example.imbdapp.models.Movie
 import com.example.imbdapp.extensions.getPosterUrl
 import com.example.imbdapp.extensions.getRating
 import com.example.imbdapp.extensions.loadImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class HomeRecyclerAdapter(val context: Context, val itemListener: MovieItemListener): RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>()
 {
+    private val videoDao = MovieDataBase.getDatabase(context).movieDao()
     val movies: MutableList<Movie> = mutableListOf()
+    val favoritesIds: MutableList<Int> = mutableListOf()
+
+    init {
+        updateDataBase()
+    }
+
+    fun updateDataBase() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val data = videoDao.getFavorites()
+            favoritesIds.addAll(data.map { it.movieId })
+        }
+    }
+
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.titleTextView)
         val poster = itemView.findViewById<ImageView>(R.id.posterImageView)
         val rating = itemView.findViewById<RatingBar>(R.id.movieRatingBar)
         val menu = itemView.findViewById<Button>(R.id.movieOptions)
+        val toggle = itemView.findViewById<ToggleButton>(R.id.toggleButton)
     }
 
     fun newMovies(newData: List<Movie>){
@@ -61,6 +80,25 @@ class HomeRecyclerAdapter(val context: Context, val itemListener: MovieItemListe
                 }
                 popup.show()
             }
+
+            toggle.isChecked = favoritesIds.contains(movie.movieId)
+
+            toggle.setOnClickListener {
+                if (toggle.isChecked) {
+                    val newMovie = Movie(movie)
+                    newMovie.isFavorite = true
+                    CoroutineScope(Dispatchers.IO).launch {
+                        videoDao.insertMovie(newMovie)
+                    }
+                } else {
+                    movie.isFavorite = false
+                    CoroutineScope(Dispatchers.IO).launch {
+                        videoDao.deleteMovieFromFavoritesBy(movie.movieId)
+                    }
+                }
+                updateDataBase()
+            }
+
             itemView.setOnClickListener {
                 itemListener.onItemClicked(movie)
             }

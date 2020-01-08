@@ -36,6 +36,7 @@ class MovieRepository(val app: Application) {
                 getPage(1)
             } else {
                 moviesData.postValue(data)
+                lastPage.postValue(2)
             }
         }
     }

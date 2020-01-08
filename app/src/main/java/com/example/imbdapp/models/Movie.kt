@@ -15,6 +15,8 @@ data class Movie (
     val title: String,
     val overview: String
 ){
+    constructor(movie: Movie) : this(null, movie.movieId, movie.posterPath, movie.backdropPath, movie.voteAverage, movie.title, movie.overview)
+
     val posterURL get() = "$IMAGES_URL$posterPath"
     var isFavorite: Boolean = false
     var watchLater: Boolean = false
