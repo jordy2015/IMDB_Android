@@ -1,4 +1,4 @@
-package com.example.imbdapp.Extensions
+package com.example.imbdapp.extensions
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

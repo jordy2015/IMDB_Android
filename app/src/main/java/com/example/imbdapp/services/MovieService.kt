@@ -1,5 +1,5 @@
-package com.example.imbdapp.Services
-import com.example.imbdapp.Data.Movies
+package com.example.imbdapp.services
+import com.example.imbdapp.models.Movies
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.QueryMap

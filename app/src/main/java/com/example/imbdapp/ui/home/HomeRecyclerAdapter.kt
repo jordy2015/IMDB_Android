@@ -1,26 +1,47 @@
 package com.example.imbdapp.ui.home
 
+import android.content.ClipData
 import android.content.Context
 import android.view.*
 import android.widget.*
+import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.imbdapp.R
-import com.example.imbdapp.Data.Movie
-import com.example.imbdapp.Extensions.getPosterUrl
-import com.example.imbdapp.Extensions.getRating
-import com.example.imbdapp.Extensions.loadImage
+import com.example.imbdapp.data.MovieDataBase
+import com.example.imbdapp.models.Movie
+import com.example.imbdapp.extensions.getPosterUrl
+import com.example.imbdapp.extensions.getRating
+import com.example.imbdapp.extensions.loadImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class HomeRecyclerAdapter(val context: Context, val itemListener: MovieItemListener): RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>()
 {
+    private val videoDao = MovieDataBase.getDatabase(context).movieDao()
     val movies: MutableList<Movie> = mutableListOf()
+    val favoritesIds: MutableList<Int> = mutableListOf()
+
+    init {
+        updateDataBase()
+    }
+
+    fun updateDataBase() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val data = videoDao.getFavorites()
+            favoritesIds.clear()
+            favoritesIds.addAll(data.map { it.movieId })
+        }
+    }
+
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.titleTextView)
         val poster = itemView.findViewById<ImageView>(R.id.posterImageView)
         val rating = itemView.findViewById<RatingBar>(R.id.movieRatingBar)
         val menu = itemView.findViewById<Button>(R.id.movieOptions)
+        val toggle = itemView.findViewById<ToggleButton>(R.id.toggleButton)
     }
 
     fun newMovies(newData: List<Movie>){
@@ -57,12 +78,39 @@ class HomeRecyclerAdapter(val context: Context, val itemListener: MovieItemListe
                 val popup = PopupMenu(context, menu)
                 popup.inflate(R.menu.menu_movie)
                 popup.setOnMenuItemClickListener {
+                    val newMovie = Movie(movie)
+                    newMovie.watchLater = true
+                    CoroutineScope(Dispatchers.IO).launch {
+                        videoDao.insertMovie(newMovie)
+                    }
                     Toast.makeText(context,R.string.msj_video_added,Toast.LENGTH_SHORT).show()
                     false
                 }
                 popup.show()
             }
+
+            toggle.isChecked = favoritesIds.contains(movie.movieId)
+
+            toggle.setOnClickListener {
+                if (toggle.isChecked) {
+                    val newMovie = Movie(movie)
+                    newMovie.isFavorite = true
+                    CoroutineScope(Dispatchers.IO).launch {
+                        videoDao.insertMovie(newMovie)
+                        updateDataBase()
+                    }
+                } else {
+                    movie.isFavorite = false
+                    CoroutineScope(Dispatchers.IO).launch {
+                        videoDao.deleteMovieFromFavoritesBy(movie.movieId)
+                        updateDataBase()
+                    }
+                }
+
+            }
+
             itemView.setOnClickListener {
+                movie.isFavorite = favoritesIds.contains(movie.movieId)
                 itemListener.onItemClicked(movie)
             }
         }

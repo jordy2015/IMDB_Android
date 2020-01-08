@@ -13,18 +13,17 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.imbdapp.Data.Movie
+import com.example.imbdapp.models.Movie
 import com.example.imbdapp.R
-import com.example.imbdapp.Extensions.startAnimation
-import com.example.imbdapp.Extensions.stopAnimation
-import com.example.imbdapp.Utilities.PaginationScrollListener
-import com.example.imbdapp.ViewModelUtilities.DaggerModelComponent
-import com.example.imbdapp.ViewModelUtilities.ViewModelFactory
+import com.example.imbdapp.application.MasterApp
+import com.example.imbdapp.extensions.startAnimation
+import com.example.imbdapp.extensions.stopAnimation
+import com.example.imbdapp.utilities.PaginationScrollListener
+import com.example.imbdapp.viewModelUtilities.ViewModelFactory
 import javax.inject.Inject
 
 class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
     @Inject
-    lateinit var vmFactory: ViewModelFactory
     lateinit var homeViewModel: HomeViewModel
 
     private lateinit var recyclerView: RecyclerView
@@ -39,6 +38,7 @@ class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        MasterApp.rootFactory.getHomeComponent().inject(this)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         recyclerView = root.findViewById(R.id.moviesRecyclerView)
         swipeLayout = root.findViewById(R.id.moviewSwipeRefreshLayout)
@@ -52,8 +52,6 @@ class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
         var isLoading: Boolean = false
 
         adapter = HomeRecyclerAdapter(requireContext(), this)
-        DaggerModelComponent.create().inject(this)
-        homeViewModel = ViewModelProviders.of(requireActivity(), vmFactory).get(HomeViewModel::class.java)
         homeViewModel.moviesData.observe(this, Observer {
             if (adapter.movies.isEmpty()) {
                 adapter.newMovies(it)
@@ -62,7 +60,7 @@ class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
                 adapter.newMovies(it)
                 adapter.notifyDataSetChanged()
             }
-
+            homeViewModel.page.value = homeViewModel.page.value!! + 1
             progressBar.stopAnimation()
             swipeLayout.isRefreshing = false
             isLoading = false
@@ -96,6 +94,8 @@ class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
 
     override fun onItemClicked(video: Movie) {
         homeViewModel.selectedMovie.value = video
-        navController.navigate(R.id.action_nav_home_to_detailMovie)
+        val bundle = Bundle()
+        bundle.putParcelable("movieSelected", video)
+        navController.navigate(R.id.action_nav_home_to_detailMovie, bundle)
     }
 }
