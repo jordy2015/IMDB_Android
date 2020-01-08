@@ -9,35 +9,39 @@
         android:id="@+id/nav_home"
         android:name="com.example.imbdapp.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_detailMovie"
+            app:destination="@id/detailMovie" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.imbdapp.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:name="com.example.imbdapp.ui.watchlater.WatchLaterFragment"
+        android:label="@string/action_watch_later"
+        tools:layout="@layout/fragment_watch_later" >
+        <action
+            android:id="@+id/action_watch_later_to_detailMovie"
+            app:destination="@id/detailMovie" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.imbdapp.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:name="com.example.imbdapp.ui.search.SearchFragment"
+        android:label="@string/menu_search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_search_to_detailMovie"
+            app:destination="@id/detailMovie" />
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.example.imbdapp.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
-
-    <fragment
-        android:id="@+id/nav_share"
-        android:name="com.example.imbdapp.ui.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
-
-    <fragment
-        android:id="@+id/nav_send"
-        android:name="com.example.imbdapp.ui.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+        android:id="@+id/detailMovie"
+        android:name="com.example.imbdapp.ui.detail.DetailMovie"
+        android:label="fragment_detail_movie"
+        tools:layout="@layout/fragment_detail_movie" >
+        <argument
+            android:name="movieSelected"
+            app:argType="com.example.imbdapp.models.Movie" />
+    </fragment>
 </navigation>
