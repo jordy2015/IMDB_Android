@@ -2,6 +2,7 @@ package com.example.imbdapp.viewModelUtilities
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.imbdapp.ui.gallery.WatchLaterViewModel
 import com.example.imbdapp.ui.home.HomeViewModel
 import dagger.Binds
 import dagger.Module
@@ -15,5 +16,12 @@ interface HomeViewModule {
     @Binds
     @IntoMap
     @ViewModelKey(HomeViewModel::class)
-    abstract fun scViewModel(viewModel: HomeViewModel): ViewModel
+    abstract fun hViewModel(viewModel: HomeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(WatchLaterViewModel::class)
+    abstract fun wlViewModel(viewModel: WatchLaterViewModel): ViewModel
 }
+
+

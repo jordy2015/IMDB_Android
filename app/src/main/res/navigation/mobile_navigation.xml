@@ -17,9 +17,13 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.imbdapp.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:name="com.example.imbdapp.ui.gallery.WatchLaterFragment"
+        android:label="@string/action_watch_later"
+        tools:layout="@layout/fragment_watch_later" >
+        <action
+            android:id="@+id/action_watch_later_to_detailMovie"
+            app:destination="@id/detailMovie" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
