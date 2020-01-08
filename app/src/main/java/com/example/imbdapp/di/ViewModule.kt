@@ -1,16 +1,16 @@
-package com.example.imbdapp.viewModelUtilities
+package com.example.imbdapp.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.imbdapp.ui.gallery.WatchLaterViewModel
+import com.example.imbdapp.ui.watchlater.WatchLaterViewModel
 import com.example.imbdapp.ui.home.HomeViewModel
-import com.example.imbdapp.ui.slideshow.SearchViewModel
+import com.example.imbdapp.ui.search.SearchViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-interface HomeViewModule {
+interface ViewModule {
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 

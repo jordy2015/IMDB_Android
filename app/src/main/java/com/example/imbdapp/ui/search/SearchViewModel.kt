@@ -1,6 +1,5 @@
-package com.example.imbdapp.ui.slideshow
+package com.example.imbdapp.ui.search
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.imbdapp.models.Movie
@@ -10,7 +9,6 @@ import com.example.imbdapp.utilities.ParamsEmun
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(private val service: MovieService) : ViewModel() {

@@ -1,4 +1,4 @@
-package com.example.imbdapp.viewModelUtilities
+package com.example.imbdapp.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
