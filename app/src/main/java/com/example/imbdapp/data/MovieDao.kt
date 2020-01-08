@@ -21,7 +21,7 @@ interface MovieDao {
     @Query("SELECT * from movies where watchLater = 1")
     fun getWatchLeterList(): List<Movie>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovie(movie: Movie)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

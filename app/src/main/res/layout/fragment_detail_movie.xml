@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="com.example.imbdapp.ui.home.HomeViewModel"/>
+            name="movieSelected"
+            type="com.example.imbdapp.models.Movie"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +30,7 @@
             android:layout_height="0dp"
             android:layout_margin="8dp"
             android:layout_marginTop="16dp"
-            app:imageURL="@{viewModel.selectedMovie.posterURL}"
+            app:imageURL="@{movieSelected.posterURL}"
             app:layout_constraintTop_toBottomOf="@+id/add_for_later"
             app:layout_constraintBottom_toTopOf="@+id/descriptionText"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:text="@{viewModel.selectedMovie.overview}"
+            android:text="@{movieSelected.overview}"
             app:layout_constraintBottom_toTopOf="@+id/ratingLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

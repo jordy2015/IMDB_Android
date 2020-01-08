@@ -52,7 +52,6 @@ class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
         var isLoading: Boolean = false
 
         adapter = HomeRecyclerAdapter(requireContext(), this)
-        //homeViewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel::class.java)
         homeViewModel.moviesData.observe(this, Observer {
             if (adapter.movies.isEmpty()) {
                 adapter.newMovies(it)
@@ -61,7 +60,7 @@ class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
                 adapter.newMovies(it)
                 adapter.notifyDataSetChanged()
             }
-            homeViewModel.page++
+            homeViewModel.page.value = homeViewModel.page.value!! + 1
             progressBar.stopAnimation()
             swipeLayout.isRefreshing = false
             isLoading = false
@@ -95,6 +94,8 @@ class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
 
     override fun onItemClicked(video: Movie) {
         homeViewModel.selectedMovie.value = video
-        navController.navigate(R.id.action_nav_home_to_detailMovie)
+        val bundle = Bundle()
+        bundle.putParcelable("movieSelected", video)
+        navController.navigate(R.id.action_nav_home_to_detailMovie, bundle)
     }
 }

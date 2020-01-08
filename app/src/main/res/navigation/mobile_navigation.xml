@@ -48,5 +48,9 @@
         android:id="@+id/detailMovie"
         android:name="com.example.imbdapp.ui.detail.DetailMovie"
         android:label="fragment_detail_movie"
-        tools:layout="@layout/fragment_detail_movie" />
+        tools:layout="@layout/fragment_detail_movie" >
+        <argument
+            android:name="movieSelected"
+            app:argType="com.example.imbdapp.models.Movie" />
+    </fragment>
 </navigation>

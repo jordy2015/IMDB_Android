@@ -1,6 +1,7 @@
 package com.example.imbdapp.application
 
 import android.app.Application
+import com.example.imbdapp.services.NetworkModule
 import com.example.imbdapp.viewModelUtilities.HomeViewModule
 import com.example.imbdapp.viewModelUtilities.ModelComponent
 import dagger.Component
@@ -17,7 +18,7 @@ class MasterApp: Application() {
     }
 }
 
-@Component(modules = [AppModule::class, HomeViewModule::class])
+@Component(modules = [AppModule::class, HomeViewModule::class, NetworkModule::class])
 interface MasterComponent{
     fun getHomeComponent(): ModelComponent
 

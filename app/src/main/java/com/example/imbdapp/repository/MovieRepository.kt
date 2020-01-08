@@ -24,7 +24,7 @@ import javax.inject.Inject
 import kotlin.collections.HashMap
 
 
-class MovieRepository @Inject constructor(val videoDao: MovieDao, val app: Application) {
+class MovieRepository @Inject constructor(val videoDao: MovieDao, val app: Application, val service: MovieService) {
 
     val moviesData = MutableLiveData<List<Movie>>()
     val lastPage = MutableLiveData<Int>()
@@ -51,8 +51,7 @@ class MovieRepository @Inject constructor(val videoDao: MovieDao, val app: Appli
             params[ParamsEmun.KEY.string] = API_KEY_STRING
             params[ParamsEmun.YEAR.string] = Calendar.getInstance().get(Calendar.YEAR).toString()
             params[ParamsEmun.PAGE.string] = "$page"
-            val movies = Performe.request<MovieService>(
-                MovieService::class.java)?.getMoviesData(params)?.body()
+            val movies = service.getMoviesData(params).body()
             movies?.let {
                 lastPage.postValue(movies.lastPage)
                 if(page > 1){
@@ -77,7 +76,6 @@ class MovieRepository @Inject constructor(val videoDao: MovieDao, val app: Appli
         }
     }
 
-    //
     @Suppress("DEPRECATION")
     fun netWorkingAvailable(): Boolean {
         val connectivityManager = app.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

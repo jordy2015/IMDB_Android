@@ -9,16 +9,16 @@ import com.example.imbdapp.repository.MovieRepository
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
-    var page: Int = 1
+    var page = MutableLiveData<Int>(1)
     val moviesData = repository.moviesData
     val selectedMovie = MutableLiveData<Movie>()
 
     fun refreshMoviesData() {
-        page = 1
-        repository.getPage(page)
+        page.value = 1
+        repository.getPage(page.value!!)
     }
 
     fun nextPage() {
-        repository.getPage(page)
+        repository.getPage(page.value!!)
     }
 }

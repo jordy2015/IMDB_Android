@@ -30,6 +30,7 @@ class HomeRecyclerAdapter(val context: Context, val itemListener: MovieItemListe
     fun updateDataBase() {
         CoroutineScope(Dispatchers.IO).launch {
             val data = videoDao.getFavorites()
+            favoritesIds.clear()
             favoritesIds.addAll(data.map { it.movieId })
         }
     }
@@ -96,17 +97,20 @@ class HomeRecyclerAdapter(val context: Context, val itemListener: MovieItemListe
                     newMovie.isFavorite = true
                     CoroutineScope(Dispatchers.IO).launch {
                         videoDao.insertMovie(newMovie)
+                        updateDataBase()
                     }
                 } else {
                     movie.isFavorite = false
                     CoroutineScope(Dispatchers.IO).launch {
                         videoDao.deleteMovieFromFavoritesBy(movie.movieId)
+                        updateDataBase()
                     }
                 }
-                updateDataBase()
+
             }
 
             itemView.setOnClickListener {
+                movie.isFavorite = favoritesIds.contains(movie.movieId)
                 itemListener.onItemClicked(movie)
             }
         }
