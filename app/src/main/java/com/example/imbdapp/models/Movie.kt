@@ -1,15 +1,20 @@
 package com.example.imbdapp.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.imbdapp.utilities.IMAGES_URL
 import com.squareup.moshi.Json
 
+@Entity(tableName = "movies")
 data class Movie (
+    @PrimaryKey val id: Int,
     @Json(name = "poster_path") val posterPath: String?,
     @Json(name = "backdrop_path") val backdropPath: String?,
     @Json(name = "vote_average") val voteAverage: Double,
     val title: String,
-    val id: Int,
     val overview: String
 ){
     val posterURL get() = "$IMAGES_URL$posterPath"
+    var isFavorite: Boolean = false
+    var watchLater: Boolean = false
 }
