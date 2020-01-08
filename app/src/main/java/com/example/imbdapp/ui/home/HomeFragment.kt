@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,7 +18,6 @@ import com.example.imbdapp.application.MasterApp
 import com.example.imbdapp.extensions.startAnimation
 import com.example.imbdapp.extensions.stopAnimation
 import com.example.imbdapp.utilities.PaginationScrollListener
-import com.example.imbdapp.viewModelUtilities.ViewModelFactory
 import javax.inject.Inject
 
 class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {

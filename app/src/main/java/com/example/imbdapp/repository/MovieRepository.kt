@@ -8,13 +8,10 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
 import com.example.imbdapp.R
 import com.example.imbdapp.data.MovieDao
-import com.example.imbdapp.data.MovieDataBase
 import com.example.imbdapp.models.Movie
 import com.example.imbdapp.services.MovieService
-import com.example.imbdapp.utilities.Performe
 import com.example.imbdapp.utilities.API_KEY_STRING
 import com.example.imbdapp.utilities.ParamsEmun
-import kotlinx.android.synthetic.main.fragment_detail_movie.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
