@@ -15,14 +15,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.imbdapp.models.Movie
 import com.example.imbdapp.R
+import com.example.imbdapp.application.MasterApp
 import com.example.imbdapp.extensions.startAnimation
 import com.example.imbdapp.extensions.stopAnimation
 import com.example.imbdapp.utilities.PaginationScrollListener
-import com.example.imbdapp.viewModelUtilities.DaggerModelComponent
 import com.example.imbdapp.viewModelUtilities.ViewModelFactory
 import javax.inject.Inject
 
 class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
+    @Inject
     lateinit var homeViewModel: HomeViewModel
 
     private lateinit var recyclerView: RecyclerView
@@ -37,6 +38,7 @@ class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        MasterApp.rootFactory.getHomeComponent().inject(this)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         recyclerView = root.findViewById(R.id.moviesRecyclerView)
         swipeLayout = root.findViewById(R.id.moviewSwipeRefreshLayout)
@@ -50,7 +52,7 @@ class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
         var isLoading: Boolean = false
 
         adapter = HomeRecyclerAdapter(requireContext(), this)
-        homeViewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel::class.java)
+        //homeViewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel::class.java)
         homeViewModel.moviesData.observe(this, Observer {
             if (adapter.movies.isEmpty()) {
                 adapter.newMovies(it)

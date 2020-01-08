@@ -1,9 +1,9 @@
 package com.example.imbdapp.viewModelUtilities
 
 import com.example.imbdapp.ui.home.HomeFragment
-import dagger.Component
+import dagger.Subcomponent
 
-@Component(modules = [HomeViewModule::class])
+@Subcomponent
 interface ModelComponent {
     fun inject(act: HomeFragment)
 }

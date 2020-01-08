@@ -8,9 +8,8 @@ import com.example.imbdapp.models.Movie
 import com.example.imbdapp.repository.MovieRepository
 import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(val app: Application) : AndroidViewModel(app) {
+class HomeViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
     var page: Int = 1
-    private val repository = MovieRepository(app)
     val moviesData = repository.moviesData
     val selectedMovie = MutableLiveData<Movie>()
 

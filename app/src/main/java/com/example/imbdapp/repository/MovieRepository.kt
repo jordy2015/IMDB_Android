@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
 import com.example.imbdapp.R
+import com.example.imbdapp.data.MovieDao
 import com.example.imbdapp.data.MovieDataBase
 import com.example.imbdapp.models.Movie
 import com.example.imbdapp.services.MovieService
@@ -23,11 +24,10 @@ import javax.inject.Inject
 import kotlin.collections.HashMap
 
 
-class MovieRepository(val app: Application) {
+class MovieRepository @Inject constructor(val videoDao: MovieDao, val app: Application) {
 
     val moviesData = MutableLiveData<List<Movie>>()
     val lastPage = MutableLiveData<Int>()
-    private val videoDao = MovieDataBase.getDatabase(app).movieDao()
 
     init {
         CoroutineScope(Dispatchers.IO).launch {

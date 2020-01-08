@@ -1,8 +1,10 @@
 package com.example.imbdapp.ui.home
 
+import android.content.ClipData
 import android.content.Context
 import android.view.*
 import android.widget.*
+import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imbdapp.R
 import com.example.imbdapp.data.MovieDataBase
@@ -75,6 +77,11 @@ class HomeRecyclerAdapter(val context: Context, val itemListener: MovieItemListe
                 val popup = PopupMenu(context, menu)
                 popup.inflate(R.menu.menu_movie)
                 popup.setOnMenuItemClickListener {
+                    val newMovie = Movie(movie)
+                    newMovie.watchLater = true
+                    CoroutineScope(Dispatchers.IO).launch {
+                        videoDao.insertMovie(newMovie)
+                    }
                     Toast.makeText(context,R.string.msj_video_added,Toast.LENGTH_SHORT).show()
                     false
                 }
