@@ -23,8 +23,6 @@ import com.example.imbdapp.viewModelUtilities.ViewModelFactory
 import javax.inject.Inject
 
 class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
-    @Inject
-    lateinit var vmFactory: ViewModelFactory
     lateinit var homeViewModel: HomeViewModel
 
     private lateinit var recyclerView: RecyclerView
@@ -52,8 +50,7 @@ class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
         var isLoading: Boolean = false
 
         adapter = HomeRecyclerAdapter(requireContext(), this)
-        DaggerModelComponent.create().inject(this)
-        homeViewModel = ViewModelProviders.of(requireActivity(), vmFactory).get(HomeViewModel::class.java)
+        homeViewModel = ViewModelProviders.of(requireActivity()).get(HomeViewModel::class.java)
         homeViewModel.moviesData.observe(this, Observer {
             if (adapter.movies.isEmpty()) {
                 adapter.newMovies(it)
@@ -62,7 +59,7 @@ class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
                 adapter.newMovies(it)
                 adapter.notifyDataSetChanged()
             }
-
+            homeViewModel.page++
             progressBar.stopAnimation()
             swipeLayout.isRefreshing = false
             isLoading = false

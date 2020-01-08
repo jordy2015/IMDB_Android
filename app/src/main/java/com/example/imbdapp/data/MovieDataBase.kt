@@ -9,7 +9,7 @@ import com.example.imbdapp.models.Movie
 @Database(entities = [Movie::class], version = 1, exportSchema = false)
 abstract class MovieDataBase: RoomDatabase() {
 
-    abstract fun monsterDao(): MovieDao
+    abstract fun movieDao(): MovieDao
 
     companion object {
         @Volatile

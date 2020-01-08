@@ -7,7 +7,8 @@ import com.squareup.moshi.Json
 
 @Entity(tableName = "movies")
 data class Movie (
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val _id: Int?,
+    @Json(name = "id") val movieId: Int,
     @Json(name = "poster_path") val posterPath: String?,
     @Json(name = "backdrop_path") val backdropPath: String?,
     @Json(name = "vote_average") val voteAverage: Double,
