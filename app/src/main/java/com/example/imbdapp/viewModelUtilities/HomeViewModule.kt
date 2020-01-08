@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.imbdapp.ui.gallery.WatchLaterViewModel
 import com.example.imbdapp.ui.home.HomeViewModel
+import com.example.imbdapp.ui.slideshow.SearchViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -22,6 +23,11 @@ interface HomeViewModule {
     @IntoMap
     @ViewModelKey(WatchLaterViewModel::class)
     abstract fun wlViewModel(viewModel: WatchLaterViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun slViewModel(viewModel: SearchViewModel): ViewModel
 }
 
 
