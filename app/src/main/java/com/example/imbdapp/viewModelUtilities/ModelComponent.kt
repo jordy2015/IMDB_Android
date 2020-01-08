@@ -1,4 +1,4 @@
-package com.example.imbdapp.ViewModelUtilities
+package com.example.imbdapp.viewModelUtilities
 
 import com.example.imbdapp.ui.home.HomeFragment
 import dagger.Component

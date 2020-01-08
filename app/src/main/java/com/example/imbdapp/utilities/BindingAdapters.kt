@@ -1,4 +1,4 @@
-package com.example.imbdapp.Utilities
+package com.example.imbdapp.utilities
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

@@ -1,15 +1,12 @@
-package com.example.imbdapp.Repository
+package com.example.imbdapp.repository
 
-import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
-import com.example.imbdapp.Data.Movie
-import com.example.imbdapp.Services.MovieService
-import com.example.imbdapp.Utilities.Performe
-import com.example.imbdapp.Utilities.API_KEY_STRING
-import com.example.imbdapp.Utilities.ParamsEmun
+import com.example.imbdapp.models.Movie
+import com.example.imbdapp.services.MovieService
+import com.example.imbdapp.utilities.Performe
+import com.example.imbdapp.utilities.API_KEY_STRING
+import com.example.imbdapp.utilities.ParamsEmun
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

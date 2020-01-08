@@ -1,7 +1,7 @@
-package com.example.imbdapp.Extensions
+package com.example.imbdapp.extensions
 
-import com.example.imbdapp.Data.Movie
-import com.example.imbdapp.Utilities.IMAGES_URL
+import com.example.imbdapp.models.Movie
+import com.example.imbdapp.utilities.IMAGES_URL
 
 fun Movie.getRating(): Float {
     return voteAverage.div(2).toFloat() //scale 1 to 10

@@ -4,12 +4,11 @@ import android.content.Context
 import android.view.*
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.imbdapp.R
-import com.example.imbdapp.Data.Movie
-import com.example.imbdapp.Extensions.getPosterUrl
-import com.example.imbdapp.Extensions.getRating
-import com.example.imbdapp.Extensions.loadImage
+import com.example.imbdapp.models.Movie
+import com.example.imbdapp.extensions.getPosterUrl
+import com.example.imbdapp.extensions.getRating
+import com.example.imbdapp.extensions.loadImage
 
 
 class HomeRecyclerAdapter(val context: Context, val itemListener: MovieItemListener): RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder>()

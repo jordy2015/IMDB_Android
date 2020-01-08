@@ -1,4 +1,4 @@
-package com.example.imbdapp.Utilities
+package com.example.imbdapp.utilities
 
 const val BASE_URL = "https://api.themoviedb.org/"
 

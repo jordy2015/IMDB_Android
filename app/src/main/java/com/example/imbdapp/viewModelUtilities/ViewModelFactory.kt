@@ -1,4 +1,4 @@
-package com.example.imbdapp.ViewModelUtilities
+package com.example.imbdapp.viewModelUtilities
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

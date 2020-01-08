@@ -1,6 +1,6 @@
-package com.example.imbdapp.Data
+package com.example.imbdapp.models
 
-import com.example.imbdapp.Utilities.IMAGES_URL
+import com.example.imbdapp.utilities.IMAGES_URL
 import com.squareup.moshi.Json
 
 data class Movie (

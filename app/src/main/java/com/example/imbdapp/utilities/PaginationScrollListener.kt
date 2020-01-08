@@ -1,6 +1,5 @@
-package com.example.imbdapp.Utilities
+package com.example.imbdapp.utilities
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 

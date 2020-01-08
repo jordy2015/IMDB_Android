@@ -13,13 +13,13 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.imbdapp.Data.Movie
+import com.example.imbdapp.models.Movie
 import com.example.imbdapp.R
-import com.example.imbdapp.Extensions.startAnimation
-import com.example.imbdapp.Extensions.stopAnimation
-import com.example.imbdapp.Utilities.PaginationScrollListener
-import com.example.imbdapp.ViewModelUtilities.DaggerModelComponent
-import com.example.imbdapp.ViewModelUtilities.ViewModelFactory
+import com.example.imbdapp.extensions.startAnimation
+import com.example.imbdapp.extensions.stopAnimation
+import com.example.imbdapp.utilities.PaginationScrollListener
+import com.example.imbdapp.viewModelUtilities.DaggerModelComponent
+import com.example.imbdapp.viewModelUtilities.ViewModelFactory
 import javax.inject.Inject
 
 class HomeFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {

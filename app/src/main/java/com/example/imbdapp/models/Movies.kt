@@ -1,4 +1,4 @@
-package com.example.imbdapp.Data
+package com.example.imbdapp.models
 
 import com.squareup.moshi.Json
 

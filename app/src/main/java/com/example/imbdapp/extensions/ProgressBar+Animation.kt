@@ -1,4 +1,4 @@
-package com.example.imbdapp.Extensions
+package com.example.imbdapp.extensions
 
 import android.view.View
 import android.widget.ProgressBar
