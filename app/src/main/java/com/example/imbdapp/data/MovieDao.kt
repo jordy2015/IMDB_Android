@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.imbdapp.models.Movie
-import com.example.imbdapp.models.Movies
 
 @Dao
 interface MovieDao {
