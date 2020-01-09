@@ -17,8 +17,8 @@
 
 ### ToDo
 
-- [] Unit test
-- [] Table support
+- [ ] Unit test
+- [ ] Table support
 
 ## Tools
 
