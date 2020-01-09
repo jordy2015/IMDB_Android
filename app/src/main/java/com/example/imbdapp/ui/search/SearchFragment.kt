@@ -36,6 +36,7 @@ class SearchFragment : Fragment(), HomeRecyclerAdapter.MovieItemListener {
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
         val search = root.findViewById<SearchView>(R.id.searchView)
+        search.onActionViewExpanded()
 
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
