@@ -21,6 +21,9 @@
     <string name="action_watch_later">Ver después</string>
     <string name="msj_video_added">Video agregado</string>
 
+    <string name="menu_tab1">Este año</string>
+    <string name="menu_tab2">Favoritas</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
